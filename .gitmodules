@@ -1,0 +1,6 @@
+[submodule "node-canvas"]
+	path = node-canvas
+	url = https://github.com/LearnBoost/node-canvas
+[submodule "XCBJS"]
+	path = XCBJS
+	url = https://github.com/CrypticSwarm/XCBJS
