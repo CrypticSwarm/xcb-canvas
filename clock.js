@@ -125,58 +125,12 @@ X.CreateWindow(
 });
 X.MapWindow({ window: wid });
 
-var tween = (function() {
-  var interval
-  return function(props, duration, func, done) {
-    var time = 0
-      , last = Date.now()
-      , diff
-    clearInterval(interval)
-    interval = setInterval(function() {
-      var now = Date.now()
-      time += now - last
-      last = now
-      if (time > duration) {
-        time = duration
-        clearInterval(interval)
-        done()
-      }
-      diff = time / duration
-      var curProps = {}
-      Object.keys(props).forEach(function(propName) {
-        var prop = props[propName]
-        curProps[propName] = prop[0] + (prop[1] - prop[0]) * diff
-      })
-      func(curProps)
-    }, 15)
-  }
-})()
-
-
 function configWin(vals) {
   X.ConfigureWindow({ window: wid, value_mask: 3, value_list: [vals.x, vals.y] })
   X.flush()
 }
 
 X.ConfigureWindow({ window: screen.root, value_mask: 2048 | 512, value_list: [true, 1] })
-
-X.onKeyPress = function(event) {
-  console.log(event)
-  switch (event.detail) {
-    case 113: return twin()
-    case 114: return twin(true)
-  }
-}
-
-function twin(a) {
-  a = a || false
-  var b = a ? [-319, 0] : [0, -319]
-  tween({ x: b, y: b }, 500, configWin, function () {
-    setTimeout(twin.bind(null, !a), 1000)
-  })
-}
-
-X.SetInputFocus({ focus: wid, revert_to: screen.root, time: Date.now()})
 
 var vis = screen.allowed_depths[5].visuals[0]
   , xcbCanvas = require('./build/default/xcb-canvas')
