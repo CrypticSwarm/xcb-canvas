@@ -103,7 +103,7 @@ function clock(ctx){
   ctx.restore();
 }
 
-var xcb = require('../xcb/xcb')
+var xcb = require('./XCBJS/xcb')
 new xcb.Connection(function(display) {
 var X = this
   , screen = X.getScreen()
@@ -121,7 +121,7 @@ X.CreateWindow(
   , _class: 1
   , visual: 0
   , value_mask: 2050
-  , value_list: [screen.white_pixel, 32768 | xcb.EventMask.KeyPress]
+  , value_list: [screen.white_pixel, 32768]
 });
 X.MapWindow({ window: wid });
 
@@ -132,10 +132,23 @@ function configWin(vals) {
 
 X.ConfigureWindow({ window: screen.root, value_mask: 2048 | 512, value_list: [true, 1] })
 
-var vis = screen.allowed_depths[5].visuals[0]
+function getMainVisual() {
+  var rootVis = screen.root_visual
+    , vis
+  screen.allowed_depths.some(function(depth) {
+    return depth.visuals.some(function(visual) {
+      return vis = (visual.visual_id == rootVis ? visual : null)
+    })
+  })
+  return vis
+}
+
+
+xcb.onExpose = drawIt
+var vis = getMainVisual()
   , xcbCanvas = require('./build/default/xcb-canvas')
-setInterval(drawIt, 1000)
 drawIt()
+setInterval(drawIt, 1000)
 function drawIt() {
   clock(ctx)
   xcbCanvas.displayCanvas.call(X, wid, vis, canvas)
