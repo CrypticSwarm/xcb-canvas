@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var Canvas = require('../node-canvas/lib/canvas')
+var Canvas = require('canvas')
   , canvas = new Canvas(320, 320)
   , ctx = canvas.getContext('2d')
   , fs = require('fs');
@@ -103,7 +103,7 @@ function clock(ctx){
   ctx.restore();
 }
 
-var xcb = require('./XCBJS/xcb')
+var xcb = require('xcbjs')
 new xcb.Connection(function(display) {
 var X = this
   , screen = X.getScreen()
@@ -146,7 +146,7 @@ function getMainVisual() {
 
 xcb.onExpose = drawIt
 var vis = getMainVisual()
-  , xcbCanvas = require('./build/default/xcb-canvas')
+  , xcbCanvas = require('./xcb-canvas')
 drawIt()
 setInterval(drawIt, 1000)
 function drawIt() {
