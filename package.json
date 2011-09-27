@@ -1,0 +1,17 @@
+{ "name" : "xcb-canvas"
+, "description" : "Uses node-canvas to render directly to an XCB drawable. In other words native application that uses canvas API"
+, "keywords" : [ "canvas", "node-canvas", "X", "X11", "XCB" ]
+, "version" : "0.0.1"
+, "homepage" : "https://github.com/CrypticSwarm/xcb-canvas"
+, "author" : "Perrin Westrich <crypticswarm@gmail.com>"
+, "repository" :
+  { "type" : "git"
+  , "url" : "git://github.com/CrypticSwarm/xcb-canvas.git"
+  }
+, "main" : "xcb-canvas.js"
+, "dependencies" : { "canvas": ">=0.7.3"
+    , "xcbjs": ">=0.0.2" }
+, "engines" : { "node" : "0.4 || 0.5" }
+, "scripts" : { }
+, "licenses" : [ { "type" : "MIT" } ]
+}
