@@ -2,9 +2,9 @@
 #include <iostream>
 #include <xcb/xcb.h>
 #include <cairo/cairo-xcb.h>
-#include "XCBJS/src/xcb.h"
-#include "XCBJS/src/__autogen_structs.h"
-#include "node-canvas/src/Canvas.h"
+#include "node_modules/xcbjs/src/xcb.h"
+#include "node_modules/xcbjs/src/__autogen_structs.h"
+#include "node_modules/canvas/src/Canvas.h"
 
 
 using namespace std;
