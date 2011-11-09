@@ -53,7 +53,7 @@ function clock(ctx){
     }
   }
   
-  var sec = now.getSeconds();
+  var sec = now.getSeconds() + (now.getMilliseconds() / 1000);
   var min = now.getMinutes();
   var hr  = now.getHours();
   hr = hr>=12 ? hr-12 : hr;
