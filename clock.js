@@ -4,9 +4,8 @@
  */
 
 var Canvas = require('canvas')
-  , canvas = new Canvas(320, 320)
-  , ctx = canvas.getContext('2d')
-  , fs = require('fs');
+
+module.exports = clock
 
 function getX(angle) {
   return -Math.sin(angle + Math.PI);
@@ -103,55 +102,3 @@ function clock(ctx){
   ctx.restore();
 }
 
-var xcb = require('xcbjs')
-new xcb.Connection(function(display) {
-var X = this
-  , screen = X.getScreen()
-  , wid = X.generateId()
-  , gc  = X.generateId()
-X.CreateWindow(
-  { depth: 0
-  , wid: wid
-  , parent: screen.root
-  , x: 10
-  , y: 10
-  , width: 320
-  , height: 320
-  , border_width: 1
-  , _class: 1
-  , visual: 0
-  , value_mask: 2050
-  , value_list: [screen.white_pixel, 32768]
-});
-X.MapWindow({ window: wid });
-
-function configWin(vals) {
-  X.ConfigureWindow({ window: wid, value_mask: 3, value_list: [vals.x, vals.y] })
-  X.flush()
-}
-
-X.ConfigureWindow({ window: screen.root, value_mask: 2048 | 512, value_list: [true, 1] })
-
-function getMainVisual() {
-  var rootVis = screen.root_visual
-    , vis
-  screen.allowed_depths.some(function(depth) {
-    return depth.visuals.some(function(visual) {
-      return vis = (visual.visual_id == rootVis ? visual : null)
-    })
-  })
-  return vis
-}
-
-
-xcb.onExpose = drawIt
-var vis = getMainVisual()
-  , xcbCanvas = require('./xcb-canvas')
-drawIt()
-setInterval(drawIt, 1000)
-function drawIt() {
-  clock(ctx)
-  xcbCanvas.displayCanvas.call(X, wid, vis, canvas)
-  X.flush()
-}
-})
